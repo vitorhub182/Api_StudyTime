@@ -17,5 +17,4 @@ COPY src .
 EXPOSE 3001
 
 # Comando para iniciar a aplicação
-#CMD ["npm", "run", "start:dev"]
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:dev"] 

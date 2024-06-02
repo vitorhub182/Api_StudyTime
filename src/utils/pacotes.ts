@@ -1,7 +1,7 @@
 import express from 'express';
 import { Sequelize } from "sequelize";
 
-
+/*
 const connection = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -11,7 +11,8 @@ const connection = new Sequelize(
     dialect: 'postgres',
   }  
 );
-/*
+*/
+
 const connection = new Sequelize(
   'study_time',
   'root',
@@ -21,7 +22,7 @@ const connection = new Sequelize(
     dialect: 'postgres', 
   }  
 );
-*/
+
 export {
     connection,
     express

@@ -1,8 +1,9 @@
 
 ### Inicializando o banco
 ```shell
-docker-compose up -d
+docker-compose up --build
 ```
+
 ### Conexão com o postgres
 ```shell
 psql -U root -d study_time

@@ -1,9 +1,10 @@
-const loginService = require('../services/LoginService');
+import LoginService from "../services/LoginService";
+const loginService = new LoginService();
 
 class LoginController{
 
-  async  getLoginList(req, res) {
-    const resposta = await loginService.getLoginList(req);
+  async getLoginList(req, res) {
+    const resposta = await loginService.getLoginList();
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
     }else{
