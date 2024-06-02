@@ -1,10 +1,5 @@
 import {Course} from '../models/Course';
 import {Student} from '../models/Student';
-/*
-import {Profile} from '../models/CourseStudent';
-import {User}  from '../models/CourseStudent';
-*/
-const {CourseStudent} = require('../models/CourseStudent');
 
 interface  Retorno {
     tipo: string;
@@ -16,17 +11,6 @@ class CourseService {
     async getCourseList() {
         try {
             const courses = await Course.findAll();
-            /* TESTE
-            const amidala = await User.create({ username: 'p4dm3', points: 1000 });
-            const queen = await Profile.create({ name: 'Queen' });
-            await amidala.addProfile(queen, { through: { selfGranted: false } });
-            const register = await User.findOne({
-              where: { username: 'p4dm3' },
-              include: Profile,
-            });
-            
-            console.log(register);
-            TESTE */ 
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: courses

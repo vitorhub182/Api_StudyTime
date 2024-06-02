@@ -2,17 +2,7 @@
 import express from 'express';
 const app = express();
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
 const rotaManagement = require('./routes/Student&Course');
-
-// inicia o serviço morgan
-app.use(morgan('dev'));
-// adiciona o express ao app
-
-// Apenas dados simples
-app.use(bodyParser.urlencoded({ extended: false}));
-// apenas o formato json de entrada (POST/ PUT/ PATCH/ DELETE)
-app.use(bodyParser.json()); 
 
 // Rota padrão. para testes
 app.use('/teste', (req, res, next) => {
@@ -20,7 +10,6 @@ app.use('/teste', (req, res, next) => {
         mensagem: 'Ok, Aplicação Node está em desenvolvimento',
     });
  });
-
 
 app.use('', rotaManagement);
 

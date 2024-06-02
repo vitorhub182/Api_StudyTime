@@ -1,17 +1,18 @@
 # Use postgres/example user/password credentials
-version: '3.9'
+version: '3.8'
 
 services:
   db:
     image: postgres:15.0
     restart: always
-    volumes:
-     - pgdata:/var/lib/postgresql/data
+    container_name: postgres_study_time
     environment:
       POSTGRES_PASSWORD: cefetmg
-      POSTGRES_DB: management
+      POSTGRES_DB: study_time
       POSTGRES_USER: root
     ports:
-      - 5432:5432
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
 volumes:
-  pgdata:
+  db-data:
