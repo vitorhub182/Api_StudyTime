@@ -1,10 +1,11 @@
-const userService = require('../services/UserService');
-
+import UserService from "../services/UserService";
+const userService = new UserService();
+import { Request, Response } from 'express';
 
 class UserController{
 
-  async  getUserList(req, res) {
-    const resposta = await userService.getUserList(req);
+  async  getUserList(req: Request, res: Response) {
+    const resposta = await userService.getUserList();
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
     }else{
@@ -13,7 +14,7 @@ class UserController{
     }
   }
 
-  async  getUser(req, res) {
+  async  getUser(req: Request, res: Response) {
     const resposta =  await userService.getUser(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
@@ -26,8 +27,9 @@ class UserController{
     }
   }
 
-  async  postRegisterUser(req, res) {
-    if(req.body.description != null && req.body.name != null){
+  async  postRegisterUser(req: Request, res: Response) {
+    const {loginId, fullName, nickName, birthDate} = req.body;
+    if((loginId != null) && (fullName != null) && (nickName != null) && (birthDate != null)){
     const resposta = await userService.postRegisterUser(req);
     
     if (resposta.tipo == "Sucess"){
@@ -45,7 +47,7 @@ class UserController{
     }
   }
 
-  async deleteUser(req, res) {
+  async deleteUser(req: Request, res: Response) {
     const resposta = await userService.deleteUser(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
@@ -59,19 +61,20 @@ class UserController{
     }
   }
 
-  async putUser(req, res) {
-    if(req.body.description != null && req.body.name != null){
-    const resposta = await userService.putUser(req);
-    if (resposta.tipo == "Sucess"){
-      res.status(200).json(resposta);
+  async putUser(req: Request, res: Response) {
+    const {loginId, fullName, nickName, birthDate} = req.body;
+    if((loginId != null) && (fullName != null) && (nickName != null) && (birthDate != null)){
+      const resposta = await userService.putUser(req);
+      if (resposta.tipo == "Sucess"){
+        res.status(200).json(resposta);
 
-    }else if (resposta.description == "NOT FOUND"){
-      res.status(404).json({ status: 'Usuario não encontrado'})
-    
-    }else{
-      console.error('Erro ao obter usuario:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter usuario' });
-    }
+      }else if (resposta.description == "NOT FOUND"){
+        res.status(404).json({ status: 'Usuario não encontrado'})
+      
+      }else{
+        console.error('Erro ao obter usuario:', resposta.description);
+        res.status(500).json({ error: 'Erro ao obter usuario' });
+      }
 
     }else{
       res.status(400).json({Error: "Parâmetros invalidos"});

@@ -1,4 +1,5 @@
 import {Login} from '../models/Login';
+import { Request, Response } from 'express';
 
 interface  Retorno {
     tipo: string;
@@ -25,7 +26,7 @@ class LoginService {
         }
     }
 
-    async getLogin(req) {
+    async getLogin(req: Request) {
         const loginId = req.params.login_id;
         try {
             const login = await Login.findByPk(loginId);
@@ -51,10 +52,10 @@ class LoginService {
         }
     }
 
-    async postRegisterLogin(req) {
-        const { name, last_name } = req.body;
+    async postRegisterLogin(req: Request) {
+        const { username, password, email } = req.body;
         try {
-            const newLogin = await Login.create({ name, last_name });
+            const newLogin = await Login.create({ username, password, email });
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: newLogin
@@ -70,7 +71,7 @@ class LoginService {
         }
     }
 
-    async deleteLogin(req) {
+    async deleteLogin(req: Request) {
         const loginId = req.params.login_id;
         try {
             const login = await Login.findByPk(loginId);
@@ -97,13 +98,13 @@ class LoginService {
         }
     }
 
-    async putLogin(req) {
+    async putLogin(req: Request) {
         const loginId = req.params.login_id;
-        const { name, last_name } = req.body;
+        const { username, password, email } = req.body;
         try {
             const login = await Login.findByPk(loginId);
         if (login) {
-            await login.update({ name, last_name });
+            await login.update({ username, password, email });
             
             const resposta: Retorno = {
                 tipo: 'Sucess',

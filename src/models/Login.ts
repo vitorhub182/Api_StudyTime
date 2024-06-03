@@ -37,9 +37,17 @@ Login.init(
 
 Login.beforeCreate(login => login.id = uuidv4());
 
+connection.sync({alter:true})
+.then(() => {
+  console.log('Tabela Login sincronizada');
+})
+.catch(error => {
+  console.error('Erro ao sincronizar a tabela Login:', error);
+});
 
 
 
+/*
 (async () => {
   await connection.sync({alter:true})
   .then(() => {
@@ -49,3 +57,4 @@ Login.beforeCreate(login => login.id = uuidv4());
     console.error('Erro ao sincronizar a tabela Login:', error);
   });
 })();
+*/

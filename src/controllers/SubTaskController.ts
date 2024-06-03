@@ -1,10 +1,11 @@
-const subTaskService = require('../services/SubTaskService');
-
+import SubTaskService from "../services/SubTaskService";
+const subTaskService = new SubTaskService();
+import { Request, Response } from 'express';
 
 class SubTaskController{
 
-  async  getSubTaskList(req, res) {
-    const resposta = await subTaskService.getSubTaskList(req);
+  async  getSubTaskList(req: Request, res: Response) {
+    const resposta = await subTaskService.getSubTaskList();
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
     }else{
@@ -13,7 +14,7 @@ class SubTaskController{
     }
   }
 
-  async  getSubTask(req, res) {
+  async  getSubTask(req: Request, res: Response) {
     const resposta =  await subTaskService.getSubTask(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
@@ -26,26 +27,26 @@ class SubTaskController{
     }
   }
 
-  async  postRegisterSubTask(req, res) {
-    if(req.body.description != null && req.body.name != null){
-    const resposta = await subTaskService.postRegisterSubTask(req);
-    
-    if (resposta.tipo == "Sucess"){
-      res.status(201).json(resposta);
+  async postRegisterSubTask(req: Request, res: Response) {
+    const {title, taskId} = req.body;
+    if((title != null) && (taskId != null)){
+      const resposta = await subTaskService.postRegisterSubTask(req);    
+      if (resposta.tipo == "Sucess"){
+        res.status(201).json(resposta);
 
-    }else if (resposta.description == "NOT FOUND"){
-      res.status(404).json({ status: 'Usuario não encontrado'})
-    
-    }else{
-      console.error('Erro ao obter usuario:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter usuario' });
-    }
+      }else if (resposta.description == "NOT FOUND"){
+        res.status(404).json({ status: 'Usuario não encontrado'})
+      
+      }else{
+        console.error('Erro ao obter usuario:', resposta.description);
+        res.status(500).json({ error: 'Erro ao obter usuario' });
+      }
     }else{
     res.status(400).json({Error: "Parâmetros invalidos"});
     }
   }
 
-  async deleteSubTask(req, res) {
+  async deleteSubTask(req: Request, res: Response) {
     const resposta = await subTaskService.deleteSubTask(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
@@ -58,20 +59,20 @@ class SubTaskController{
       res.status(500).json({ error: 'Erro ao obter usuario' });
     }
   }
+  async putSubTask(req: Request, res: Response) {
+    const {title, taskId} = req.body;
+    if((title != null) && (taskId != null)){
+      const resposta = await subTaskService.putSubTask(req);
+      if (resposta.tipo == "Sucess"){
+        res.status(200).json(resposta);
 
-  async putSubTask(req, res) {
-    if(req.body.description != null && req.body.name != null){
-    const resposta = await subTaskService.putSubTask(req);
-    if (resposta.tipo == "Sucess"){
-      res.status(200).json(resposta);
-
-    }else if (resposta.description == "NOT FOUND"){
-      res.status(404).json({ status: 'Usuario não encontrado'})
-    
-    }else{
-      console.error('Erro ao obter usuario:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter usuario' });
-    }
+      }else if (resposta.description == "NOT FOUND"){
+        res.status(404).json({ status: 'Usuario não encontrado'})
+      
+      }else{
+        console.error('Erro ao obter usuario:', resposta.description);
+        res.status(500).json({ error: 'Erro ao obter usuario' });
+      }
 
     }else{
       res.status(400).json({Error: "Parâmetros invalidos"});

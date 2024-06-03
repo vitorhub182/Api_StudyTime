@@ -1,9 +1,10 @@
 import LoginService from "../services/LoginService";
 const loginService = new LoginService();
+import { Request, Response } from 'express';
 
 class LoginController{
 
-  async getLoginList(req, res) {
+  async getLoginList(req: Request, res: Response) {
     const resposta = await loginService.getLoginList();
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
@@ -13,7 +14,7 @@ class LoginController{
     }
   }
 
-  async getLogin(req, res) {
+  async getLogin(req: Request, res: Response) {
     const resposta =  await loginService.getLogin(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
@@ -25,9 +26,10 @@ class LoginController{
       res.status(500).json({ error: 'Erro ao obter login' });
     }
   }
-  
-  async  postRegisterLogin(req, res) {
-    if(req.body.last_name != null && req.body.name != null){
+
+  async  postRegisterLogin(req: Request, res: Response) {
+    const {username, password, email} = req.body;
+    if((username != null) && (password != null) && (email != null)){
     const resposta = await loginService.postRegisterLogin(req);
     
     if (resposta.tipo == "Sucess"){
@@ -45,7 +47,7 @@ class LoginController{
   }
   }
   
-  async deleteLogin(req, res) {
+  async deleteLogin(req: Request, res: Response) {
     const resposta = await loginService.deleteLogin(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
@@ -59,8 +61,9 @@ class LoginController{
     }
   }
   
-  async putLogin(req, res) {
-    if(req.body.last_name != null && req.body.name != null){
+  async putLogin(req: Request, res: Response) {
+    const {username, password, email} = req.body;
+    if((username != null) && (password != null) && (email != null)){
     const resposta = await loginService.putLogin(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);

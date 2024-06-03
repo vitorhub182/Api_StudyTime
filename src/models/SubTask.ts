@@ -43,7 +43,15 @@ SubTask.init(
 );
 
 
+connection.sync({alter:true})
+  .then(() => {
+    console.log('Tabela SubTask sincronizada');
+  })
+  .catch(error => {
+    console.error('Erro ao sincronizar a tabela SubTask:', error);
+  });
 
+/*
 (async () => {
   await connection.sync({alter:true})
   .then(() => {
@@ -53,3 +61,4 @@ SubTask.init(
     console.error('Erro ao sincronizar a tabela SubTask:', error);
   });
 })();
+*/

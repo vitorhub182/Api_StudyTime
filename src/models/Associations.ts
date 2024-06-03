@@ -3,7 +3,7 @@ import {Login} from "./Login";
 import {Task} from "./Task";
 import {SubTask} from "./SubTask";
 import {Card} from "./Card";
-
+import { connection } from "../utils/pacotes";
 
 Login.hasOne(User, {foreignKey: 'loginId', as: 'login'});
 User.belongsTo(Login, { foreignKey: 'loginId', as: 'user'});
@@ -17,4 +17,9 @@ SubTask.belongsTo(Task, { foreignKey: 'taskId', as: 'subTask'});
 SubTask.hasMany(Card, {foreignKey: 'subTaskId', as: 'subTask'});
 Card.belongsTo(SubTask, { foreignKey: 'subTaskId', as: 'card'});
 
+
+
+
+    
 module.exports = { User, Login, Task, SubTask, Card };
+

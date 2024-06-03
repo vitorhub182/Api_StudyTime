@@ -1,11 +1,22 @@
 
 import express from 'express';
 const app = express();
+
 const loginRoutes = require('./routes/LoginRoutes');
 const userRoutes = require('./routes/UserRoutes');
 const taskRoutes = require('./routes/TaskRoutes');
 const subTaskRoutes = require('./routes/SubTaskRoutes');
 const cardRoutes = require('./routes/CardRoutes');
+
+// apenas o formato json de entrada (POST/ PUT/ PATCH/ DELETE)
+app.use(express.json());    
+app.use(express.urlencoded({ extended: true}));
+
+app.use('/login', loginRoutes);
+app.use('/user', userRoutes);
+app.use('/task', taskRoutes);
+app.use('/subtask', subTaskRoutes);
+app.use('/card', cardRoutes);
 
 // Rota padrão. para testes
 app.use('/teste', (req, res, next) => {
@@ -13,12 +24,6 @@ app.use('/teste', (req, res, next) => {
         mensagem: 'Ok, Aplicação Node está em desenvolvimento',
     });
  });
-
-app.use('/login', loginRoutes);
-app.use('/user', userRoutes);
-app.use('/task', taskRoutes);
-app.use('/subtask', subTaskRoutes);
-app.use('/card', cardRoutes);
 
 // Tratamento para quando não se encontra nenhuma rota
 app.use((req,res,next) => {

@@ -1,4 +1,5 @@
 import {User} from '../models/User';
+import { Request, Response } from 'express';
 
 interface  Retorno {
     tipo: string;
@@ -25,7 +26,7 @@ class UserService {
         }
     }
 
-    async getUser(req) {
+    async getUser(req: Request) {
         const userId = req.params.user_id;
         try {
             const user = await User.findByPk(userId);
@@ -51,10 +52,10 @@ class UserService {
         }
     }
 
-    async postRegisterUser(req) {
-        const { name, description } = req.body;
+    async postRegisterUser(req: Request) {
+        const {loginId, fullName, nickName, birthDate} = req.body;
         try {
-            const newUser = await User.create({ name, description });
+            const newUser = await User.create({ loginId, fullName, nickName, birthDate });
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: newUser
@@ -70,7 +71,7 @@ class UserService {
         }
     }
 
-    async deleteUser(req) {
+    async deleteUser(req: Request) {
         const userId = req.params.user_id;
         try {
             const user = await User.findByPk(userId);
@@ -97,13 +98,13 @@ class UserService {
         }
     }
 
-    async putUser(req) {
+    async putUser(req: Request) {
         const userId = req.params.user_id;
-        const { name, description } = req.body;
+        const {loginId, fullName, nickName, birthDate} = req.body;
         try {
             const user = await User.findByPk(userId);
         if (user) {
-            await user.update({ name, description });
+            await user.update({ loginId, fullName, nickName, birthDate });
             
             const resposta: Retorno = {
                 tipo: 'Sucess',

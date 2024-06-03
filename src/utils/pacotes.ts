@@ -20,7 +20,7 @@ const connection = new Sequelize(
   {
     host: 'localhost',
     dialect: 'postgres', 
-  }  
+  }
 );
 
 export {

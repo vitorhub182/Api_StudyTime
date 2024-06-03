@@ -1,4 +1,5 @@
 import {Task} from '../models/Task';
+import { Request, Response } from 'express';
 
 interface  Retorno {
     tipo: string;
@@ -25,7 +26,7 @@ class TaskService {
         }
     }
 
-    async getTask(req) {
+    async getTask(req: Request) {
         const taskId = req.params.task_id;
         try {
             const task = await Task.findByPk(taskId);
@@ -51,10 +52,10 @@ class TaskService {
         }
     }
 
-    async postRegisterTask(req) {
-        const { name, last_name } = req.body;
+    async postRegisterTask(req: Request) {
+        const {title, userId, describe, time, lastDateStudy} = req.body;
         try {
-            const newTask = await Task.create({ name, last_name });
+            const newTask = await Task.create({ title, userId, describe, time, lastDateStudy});
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: newTask
@@ -70,7 +71,7 @@ class TaskService {
         }
     }
 
-    async deleteTask(req) {
+    async deleteTask(req: Request) {
         const taskId = req.params.task_id;
         try {
             const task = await Task.findByPk(taskId);
@@ -97,13 +98,13 @@ class TaskService {
         }
     }
 
-    async putTask(req) {
+    async putTask(req: Request) {
         const taskId = req.params.task_id;
-        const { name, last_name } = req.body;
+        const { title, userId, describe, time, lastDateStudy } = req.body;
         try {
             const task = await Task.findByPk(taskId);
         if (task) {
-            await task.update({ name, last_name });
+            await task.update({ title, userId, describe, time, lastDateStudy });
             
             const resposta: Retorno = {
                 tipo: 'Sucess',

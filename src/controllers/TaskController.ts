@@ -1,9 +1,11 @@
-const taskService = require('../services/TaskService');
+import TaskService from "../services/TaskService";
+const taskService = new TaskService();
+import { Request, Response } from 'express';
 
 class TaskController{
 
-  async  getTaskList(req, res) {
-    const resposta = await taskService.getTaskList(req);
+  async  getTaskList(req: Request, res: Response) {
+    const resposta = await taskService.getTaskList();
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
     }else{
@@ -12,7 +14,7 @@ class TaskController{
     }
   }
 
-  async getTask(req, res) {
+  async getTask(req: Request, res: Response) {
     const resposta =  await taskService.getTask(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
@@ -25,10 +27,10 @@ class TaskController{
     }
   }
   
-  async  postRegisterTask(req, res) {
-    if(req.body.last_name != null && req.body.name != null){
+  async  postRegisterTask(req: Request, res: Response) {
+    const {title, userId} = req.body;
+    if((title != null) && (userId != null)){
     const resposta = await taskService.postRegisterTask(req);
-    
     if (resposta.tipo == "Sucess"){
       res.status(201).json(resposta);
   
@@ -44,7 +46,7 @@ class TaskController{
   }
   }
   
-  async deleteTask(req, res) {
+  async deleteTask(req: Request, res: Response) {
     const resposta = await taskService.deleteTask(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
@@ -58,8 +60,9 @@ class TaskController{
     }
   }
   
-  async putTask(req, res) {
-    if(req.body.last_name != null && req.body.name != null){
+  async putTask(req: Request, res: Response) {
+    const {title, userId} = req.body;
+    if((title != null) && (userId != null)){
     const resposta = await taskService.putTask(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);

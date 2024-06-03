@@ -44,6 +44,16 @@ Task.init(
 
 
 
+connection.sync({alter:true})
+.then(() => {
+  console.log('Tabela Task sincronizada');
+})
+.catch(error => {
+  console.error('Erro ao sincronizar a tabela Task:', error);
+});
+
+
+/*
 (async () => {
   await connection.sync({alter:true})
   .then(() => {
@@ -53,3 +63,4 @@ Task.init(
     console.error('Erro ao sincronizar a tabela Task:', error);
   });
 })();
+*/

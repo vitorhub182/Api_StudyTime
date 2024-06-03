@@ -1,4 +1,5 @@
 import {SubTask} from '../models/SubTask';
+import { Request, Response } from 'express';
 
 interface  Retorno {
     tipo: string;
@@ -25,7 +26,7 @@ class SubTaskService {
         }
     }
 
-    async getSubTask(req) {
+    async getSubTask(req: Request) {
         const subtaskId = req.params.subtask_id;
         try {
             const subtask = await SubTask.findByPk(subtaskId);
@@ -51,10 +52,10 @@ class SubTaskService {
         }
     }
 
-    async postRegisterSubTask(req) {
-        const { name, description } = req.body;
+    async postRegisterSubTask(req: Request) {
+        const { title, taskId, describe, time, lastDateStudy } = req.body;
         try {
-            const newSubTask = await SubTask.create({ name, description });
+            const newSubTask = await SubTask.create({ title, taskId, describe, time, lastDateStudy });
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: newSubTask
@@ -70,7 +71,7 @@ class SubTaskService {
         }
     }
 
-    async deleteSubTask(req) {
+    async deleteSubTask(req: Request) {
         const subtaskId = req.params.subtask_id;
         try {
             const subtask = await SubTask.findByPk(subtaskId);
@@ -97,13 +98,13 @@ class SubTaskService {
         }
     }
 
-    async putSubTask(req) {
+    async putSubTask(req: Request) {
         const subtaskId = req.params.subtask_id;
-        const { name, description } = req.body;
+        const { title, taskId, describe, time, lastDateStudy } = req.body;
         try {
             const subtask = await SubTask.findByPk(subtaskId);
         if (subtask) {
-            await subtask.update({ name, description });
+            await subtask.update({ title, taskId, describe, time, lastDateStudy });
             
             const resposta: Retorno = {
                 tipo: 'Sucess',

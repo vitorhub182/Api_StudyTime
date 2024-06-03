@@ -1,4 +1,5 @@
 import {Card} from '../models/Card';
+import { Request, Response } from 'express';
 
 interface  Retorno {
     tipo: string;
@@ -25,7 +26,7 @@ class CardService {
         }
     }
 
-    async getCard(req) {
+    async getCard(req: Request) {
         const cardId = req.params.card_id;
         try {
             const card = await Card.findByPk(cardId);
@@ -51,10 +52,10 @@ class CardService {
         }
     }
 
-    async postRegisterCard(req) {
-        const { name, last_name } = req.body;
+    async postRegisterCard(req: Request) {
+        const { title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated} = req.body;
         try {
-            const newCard = await Card.create({ name, last_name });
+            const newCard = await Card.create({ title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: newCard
@@ -70,7 +71,7 @@ class CardService {
         }
     }
 
-    async deleteCard(req) {
+    async deleteCard(req: Request) {
         const cardId = req.params.card_id;
         try {
             const card = await Card.findByPk(cardId);
@@ -97,13 +98,13 @@ class CardService {
         }
     }
 
-    async putCard(req) {
+    async putCard( req: Request) {
         const cardId = req.params.card_id;
-        const { name, last_name } = req.body;
+        const { title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated } = req.body;
         try {
             const card = await Card.findByPk(cardId);
         if (card) {
-            await card.update({ name, last_name });
+            await card.update({ title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
             
             const resposta: Retorno = {
                 tipo: 'Sucess',

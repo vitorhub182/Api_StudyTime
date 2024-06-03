@@ -21,11 +21,11 @@ Card.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    Question: {
+    question: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    Answer: {
+    answer: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -51,7 +51,15 @@ Card.init(
 );
 
 
+connection.sync({alter:true})
+    .then(() => {
+        console.log('Tabela Card sincronizada');
+    })
+    .catch(error => {
+        console.error('Erro ao sincronizar a tabela Card:', error);
+    });
 
+/*
 (async () => {
   await connection.sync({alter:true})
   .then(() => {
@@ -61,3 +69,5 @@ Card.init(
     console.error('Erro ao sincronizar a tabela Card:', error);
   });
 })();
+
+*/

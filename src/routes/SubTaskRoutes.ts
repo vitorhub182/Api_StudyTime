@@ -1,8 +1,7 @@
 import {express} from '../utils/pacotes';
-const router = express.Router();
 import SubTaskController from '../controllers/SubTaskController';
-
 const subTaskController = new SubTaskController();
+const router = express.Router();
 
 router.get('/', subTaskController.getSubTaskList);
 router.get('/SUBTASK=:subTask_id', subTaskController.getSubTask);

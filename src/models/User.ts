@@ -2,7 +2,6 @@ import { connection } from "../utils/pacotes";
 
 const { DataTypes, Model } = require('sequelize');
 
-
 export class User extends Model {}
 
 User.init(
@@ -36,6 +35,15 @@ User.init(
 );
 
 
+connection.sync({alter:true})
+  .then(() => {
+    console.log('Tabela User sincronizada');
+  })
+  .catch(error => {
+    console.error('Erro ao sincronizar a tabela User:', error);
+  });
+
+/*
 
 (async () => {
   await connection.sync({alter:true})
@@ -46,3 +54,4 @@ User.init(
     console.error('Erro ao sincronizar a tabela User:', error);
   });
 })();
+*/
