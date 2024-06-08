@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 class CardController{
 
   async  getCardList(req: Request, res: Response) {
-    const resposta = await cardService.getCardList();
+    const resposta = await cardService.getCardList(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
     }else{

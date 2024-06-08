@@ -9,7 +9,7 @@ SubTask.init(
   {
     id:{
       type: DataTypes.INTEGER,
-      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
       unique: true,
     },
@@ -43,7 +43,7 @@ SubTask.init(
 );
 
 
-connection.sync({alter:true})
+connection.sync({force:true})
   .then(() => {
     console.log('Tabela SubTask sincronizada');
   })

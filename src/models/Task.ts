@@ -9,7 +9,7 @@ Task.init(
   {
     id:{
       type: DataTypes.INTEGER,
-      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
       unique: true,
     },
@@ -44,7 +44,7 @@ Task.init(
 
 
 
-connection.sync({alter:true})
+connection.sync({force:true})
 .then(() => {
   console.log('Tabela Task sincronizada');
 })

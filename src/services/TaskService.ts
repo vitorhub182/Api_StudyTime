@@ -1,5 +1,6 @@
 import {Task} from '../models/Task';
 import { Request, Response } from 'express';
+import { User } from '../models/User';
 
 interface  Retorno {
     tipo: string;
@@ -8,9 +9,9 @@ interface  Retorno {
 
 class TaskService {
 
-    async getTaskList() {
+    async getTaskList(req: Request) {
         try {
-            const tasks = await Task.findAll();
+            const tasks = await Task.findAll({ where: {userId: req.body.userId},});
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: tasks
@@ -55,12 +56,23 @@ class TaskService {
     async postRegisterTask(req: Request) {
         const {title, userId, describe, time, lastDateStudy} = req.body;
         try {
-            const newTask = await Task.create({ title, userId, describe, time, lastDateStudy});
-            const resposta: Retorno = {
-                tipo: 'Sucess',
-                description: newTask
-            };
+            const user = await User.findByPk(userId);
+
+            if (user) {
+                const newTask = await Task.create({ title, userId, describe, time, lastDateStudy});
+                const resposta: Retorno = {
+                    tipo: 'Sucess',
+                    description: newTask
+                };
             return resposta;
+
+            } else {
+                const resposta: Retorno = {
+                    tipo: 'Error',
+                    description: 'NOT FOUND'
+                  };
+                  return resposta;
+            }
 
         } catch (error) {
             const resposta: Retorno = {

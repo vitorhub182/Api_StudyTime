@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 class TaskController{
 
   async  getTaskList(req: Request, res: Response) {
-    const resposta = await taskService.getTaskList();
+    const resposta = await taskService.getTaskList(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
     }else{

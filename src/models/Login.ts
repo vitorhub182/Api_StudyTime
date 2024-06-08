@@ -37,7 +37,7 @@ Login.init(
 
 Login.beforeCreate(login => login.id = uuidv4());
 
-connection.sync({alter:true})
+connection.sync({force:true})
 .then(() => {
   console.log('Tabela Login sincronizada');
 })

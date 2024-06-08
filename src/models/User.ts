@@ -35,7 +35,7 @@ User.init(
 );
 
 
-connection.sync({alter:true})
+connection.sync({force:true})
   .then(() => {
     console.log('Tabela User sincronizada');
   })

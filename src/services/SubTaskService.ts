@@ -1,5 +1,6 @@
 import {SubTask} from '../models/SubTask';
 import { Request, Response } from 'express';
+import { Task } from '../models/Task';
 
 interface  Retorno {
     tipo: string;
@@ -8,9 +9,9 @@ interface  Retorno {
 
 class SubTaskService {
 
-    async getSubTaskList() {
+    async getSubTaskList(req: Request) {
         try {
-            const subtasks = await SubTask.findAll();
+            const subtasks = await SubTask.findAll({ where: {taskId: req.body.taskId},});
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: subtasks
@@ -27,7 +28,7 @@ class SubTaskService {
     }
 
     async getSubTask(req: Request) {
-        const subtaskId = req.params.subtask_id;
+        const subtaskId = req.params.subTask_id;
         try {
             const subtask = await SubTask.findByPk(subtaskId);
             if (subtask) {
@@ -55,12 +56,23 @@ class SubTaskService {
     async postRegisterSubTask(req: Request) {
         const { title, taskId, describe, time, lastDateStudy } = req.body;
         try {
-            const newSubTask = await SubTask.create({ title, taskId, describe, time, lastDateStudy });
-            const resposta: Retorno = {
-                tipo: 'Sucess',
-                description: newSubTask
-            };
+            const task = await Task.findByPk(taskId);
+
+            if (task) {
+                const newSubTask = await SubTask.create({ title, taskId, describe, time, lastDateStudy});
+                const resposta: Retorno = {
+                    tipo: 'Sucess',
+                    description: newSubTask
+                };
             return resposta;
+
+            } else {
+                const resposta: Retorno = {
+                    tipo: 'Error',
+                    description: 'NOT FOUND'
+                  };
+                  return resposta;
+            }
 
         } catch (error) {
             const resposta: Retorno = {
@@ -72,7 +84,7 @@ class SubTaskService {
     }
 
     async deleteSubTask(req: Request) {
-        const subtaskId = req.params.subtask_id;
+        const subtaskId = req.params.subTask_id;
         try {
             const subtask = await SubTask.findByPk(subtaskId);
             if (subtask) {
@@ -99,7 +111,7 @@ class SubTaskService {
     }
 
     async putSubTask(req: Request) {
-        const subtaskId = req.params.subtask_id;
+        const subtaskId = req.params.subTask_id;
         const { title, taskId, describe, time, lastDateStudy } = req.body;
         try {
             const subtask = await SubTask.findByPk(subtaskId);

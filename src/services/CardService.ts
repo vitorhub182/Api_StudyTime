@@ -1,5 +1,6 @@
 import {Card} from '../models/Card';
 import { Request, Response } from 'express';
+import { SubTask } from '../models/SubTask';
 
 interface  Retorno {
     tipo: string;
@@ -8,9 +9,9 @@ interface  Retorno {
 
 class CardService {
 
-    async getCardList() {
+    async getCardList(req: Request) {
         try {
-            const cards = await Card.findAll();
+            const cards = await Card.findAll({ where: {subTaskId: req.body.subTaskId},});
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: cards
@@ -55,12 +56,22 @@ class CardService {
     async postRegisterCard(req: Request) {
         const { title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated} = req.body;
         try {
-            const newCard = await Card.create({ title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
+            const subTask = await SubTask.findByPk(subTaskId);
+            if (subTask) {
+                const newCard = await Card.create({ title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: newCard
             };
             return resposta;
+            } else {
+                const resposta: Retorno = {
+                    tipo: 'Error',
+                    description: 'NOT FOUND'
+                  };
+                  return resposta;
+            }
+            
 
         } catch (error) {
             const resposta: Retorno = {

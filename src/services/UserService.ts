@@ -1,3 +1,4 @@
+import { Login } from '../models/Login';
 import {User} from '../models/User';
 import { Request, Response } from 'express';
 
@@ -8,9 +9,9 @@ interface  Retorno {
 
 class UserService {
 
-    async getUserList() {
+    async getUserList(req: Request) {
         try {
-            const users = await User.findAll();
+            const users = await User.findAll({ where: {loginId: req.body.loginId},});
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: users
@@ -55,12 +56,25 @@ class UserService {
     async postRegisterUser(req: Request) {
         const {loginId, fullName, nickName, birthDate} = req.body;
         try {
-            const newUser = await User.create({ loginId, fullName, nickName, birthDate });
-            const resposta: Retorno = {
-                tipo: 'Sucess',
-                description: newUser
-            };
-            return resposta;
+            
+            const login = await Login.findByPk(loginId);
+
+            if (login) {
+                const newUser = await User.create({ loginId, fullName, nickName, birthDate });
+            
+                const resposta: Retorno = {
+                    tipo: 'Sucess',
+                    description: newUser
+                };
+    
+                return resposta;
+            } else {
+                const resposta: Retorno = {
+                    tipo: 'Error',
+                    description: 'NOT FOUND'
+                  };
+                  return resposta;
+            }
 
         } catch (error) {
             const resposta: Retorno = {

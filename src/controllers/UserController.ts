@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 class UserController{
 
   async  getUserList(req: Request, res: Response) {
-    const resposta = await userService.getUserList();
+    const resposta = await userService.getUserList(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);
     }else{
