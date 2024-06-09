@@ -1,4 +1,6 @@
+import { ForeignKey } from "../node_modules/sequelize-typescript/dist/index";
 import { connection } from "../utils/pacotes";
+import { SubTask } from "./SubTask";
 
 const { DataTypes, Model } = require('sequelize');
 
@@ -16,10 +18,6 @@ Task.init(
     title:{
       type: DataTypes.STRING,
       allowNull: false, 
-    },
-    userId: {
-      type: DataTypes.UUID,
-      allowNull: false,
     },
     describe: {
       type: DataTypes.STRING,
@@ -42,16 +40,8 @@ Task.init(
   },
 );
 
-
-
-connection.sync({force:true})
-.then(() => {
-  console.log('Tabela Task sincronizada');
-})
-.catch(error => {
-  console.error('Erro ao sincronizar a tabela Task:', error);
-});
-
+Task.hasMany(SubTask, {  onDelete: 'CASCADE'});
+SubTask.belongsTo(Task);
 
 /*
 (async () => {

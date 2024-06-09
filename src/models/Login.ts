@@ -1,4 +1,5 @@
 import { connection } from "../utils/pacotes";
+import { User } from "./User";
 const { DataTypes, Model } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
@@ -37,14 +38,18 @@ Login.init(
 
 Login.beforeCreate(login => login.id = uuidv4());
 
-connection.sync({force:true})
+
+Login.hasOne(User, { onDelete: 'CASCADE'});
+User.belongsTo(Login);
+
+
+connection.sync({alter:true})
 .then(() => {
-  console.log('Tabela Login sincronizada');
+  console.log('Tabelas sincronizadas');
 })
 .catch(error => {
-  console.error('Erro ao sincronizar a tabela Login:', error);
+  console.error('Erro na sincronização das tabelas:', error);
 });
-
 
 
 /*

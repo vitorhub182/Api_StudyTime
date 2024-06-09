@@ -28,8 +28,8 @@ class SubTaskController{
   }
 
   async postRegisterSubTask(req: Request, res: Response) {
-    const {title, taskId} = req.body;
-    if((title != null) && (taskId != null)){
+    const {title, TaskId} = req.body;
+    if((title != null) && (TaskId != null)){
       const resposta = await subTaskService.postRegisterSubTask(req);    
       if (resposta.tipo == "Sucess"){
         res.status(201).json(resposta);
@@ -60,8 +60,8 @@ class SubTaskController{
     }
   }
   async putSubTask(req: Request, res: Response) {
-    const {title, taskId} = req.body;
-    if((title != null) && (taskId != null)){
+    const {title, TaskId} = req.body;
+    if((title != null) && (TaskId != null)){
       const resposta = await subTaskService.putSubTask(req);
       if (resposta.tipo == "Sucess"){
         res.status(200).json(resposta);

@@ -1,4 +1,5 @@
 import { connection } from "../utils/pacotes";
+import { Task } from "./Task";
 
 const { DataTypes, Model } = require('sequelize');
 
@@ -6,9 +7,10 @@ export class User extends Model {}
 
 User.init(
   {
-    loginId: {
-      type: DataTypes.UUID,
+    id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
       unique: true,
       primaryKey: true,
     },
@@ -34,14 +36,9 @@ User.init(
   },
 );
 
+User.hasMany(Task, { onDelete: 'CASCADE'});
+Task.belongsTo(User);
 
-connection.sync({force:true})
-  .then(() => {
-    console.log('Tabela User sincronizada');
-  })
-  .catch(error => {
-    console.error('Erro ao sincronizar a tabela User:', error);
-  });
 
 /*
 

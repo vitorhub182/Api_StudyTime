@@ -1,4 +1,5 @@
 import { connection } from "../utils/pacotes";
+import { Card } from "./Card";
 
 const { DataTypes, Model } = require('sequelize');
 
@@ -16,10 +17,6 @@ SubTask.init(
     title:{
       type: DataTypes.STRING,
       allowNull: false, 
-    },
-    taskId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
     },
     describe: {
       type: DataTypes.STRING,
@@ -42,14 +39,9 @@ SubTask.init(
   },
 );
 
+SubTask.hasMany(Card, { onDelete: 'CASCADE'});
+Card.belongsTo(SubTask);
 
-connection.sync({force:true})
-  .then(() => {
-    console.log('Tabela SubTask sincronizada');
-  })
-  .catch(error => {
-    console.error('Erro ao sincronizar a tabela SubTask:', error);
-  });
 
 /*
 (async () => {

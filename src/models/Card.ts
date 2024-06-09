@@ -1,4 +1,5 @@
 import { connection } from "../utils/pacotes";
+import { SubTask } from "./SubTask";
 
 const { DataTypes, Model } = require('sequelize');
 
@@ -16,10 +17,6 @@ Card.init(
     title:{
       type: DataTypes.STRING,
       allowNull: false, 
-    },
-    subTaskId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
     },
     question: {
       type: DataTypes.STRING,
@@ -50,14 +47,6 @@ Card.init(
   },
 );
 
-
-connection.sync({force:true})
-    .then(() => {
-        console.log('Tabela Card sincronizada');
-    })
-    .catch(error => {
-        console.error('Erro ao sincronizar a tabela Card:', error);
-    });
 
 /*
 (async () => {

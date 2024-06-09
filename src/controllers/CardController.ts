@@ -28,8 +28,8 @@ class CardController{
   }
   
   async  postRegisterCard(req: Request, res: Response) {
-    const {title, subTaskId, cardActivated} = req.body;
-    if((title != null) && (subTaskId != null)&& (cardActivated != null)){
+    const {title, SubTaskId, cardActivated} = req.body;
+    if((title != null) && (SubTaskId != null)&& (cardActivated != null)){
     const resposta = await cardService.postRegisterCard(req);
     
     if (resposta.tipo == "Sucess"){
@@ -62,8 +62,8 @@ class CardController{
   }
   
   async putCard(req: Request, res: Response) {
-    const {title, subTaskId, cardActivated} = req.body;
-    if((title != null) && (subTaskId != null) && (cardActivated != null)){
+    const {title, SubTaskId, cardActivated} = req.body;
+    if((title != null) && (SubTaskId != null) && (cardActivated != null)){
     const resposta = await cardService.putCard(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);

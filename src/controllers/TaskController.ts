@@ -28,8 +28,8 @@ class TaskController{
   }
   
   async  postRegisterTask(req: Request, res: Response) {
-    const {title, userId} = req.body;
-    if((title != null) && (userId != null)){
+    const {title, UserId} = req.body;
+    if((title != null) && (UserId!= null)){
     const resposta = await taskService.postRegisterTask(req);
     if (resposta.tipo == "Sucess"){
       res.status(201).json(resposta);
@@ -61,8 +61,8 @@ class TaskController{
   }
   
   async putTask(req: Request, res: Response) {
-    const {title, userId} = req.body;
-    if((title != null) && (userId != null)){
+    const {title, UserId} = req.body;
+    if((title != null) && (UserId != null)){
     const resposta = await taskService.putTask(req);
     if (resposta.tipo == "Sucess"){
       res.status(200).json(resposta);

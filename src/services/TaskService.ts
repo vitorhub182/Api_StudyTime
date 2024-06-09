@@ -11,7 +11,7 @@ class TaskService {
 
     async getTaskList(req: Request) {
         try {
-            const tasks = await Task.findAll({ where: {userId: req.body.userId},});
+            const tasks = await Task.findAll({ where: {UserId: req.body.UserId},});
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: tasks
@@ -28,9 +28,9 @@ class TaskService {
     }
 
     async getTask(req: Request) {
-        const taskId = req.params.task_id;
+        const TaskId = req.params.task_id;
         try {
-            const task = await Task.findByPk(taskId);
+            const task = await Task.findByPk(TaskId);
             if (task) {
                 const resposta: Retorno = {
                     tipo: 'Sucess',
@@ -54,12 +54,12 @@ class TaskService {
     }
 
     async postRegisterTask(req: Request) {
-        const {title, userId, describe, time, lastDateStudy} = req.body;
+        const {title, UserId, describe, time, lastDateStudy} = req.body;
         try {
-            const user = await User.findByPk(userId);
+            const user = await User.findByPk(UserId);
 
             if (user) {
-                const newTask = await Task.create({ title, userId, describe, time, lastDateStudy});
+                const newTask = await Task.create({ title, UserId, describe, time, lastDateStudy});
                 const resposta: Retorno = {
                     tipo: 'Sucess',
                     description: newTask
@@ -84,9 +84,9 @@ class TaskService {
     }
 
     async deleteTask(req: Request) {
-        const taskId = req.params.task_id;
+        const TaskId = req.params.task_id;
         try {
-            const task = await Task.findByPk(taskId);
+            const task = await Task.findByPk(TaskId);
             if (task) {
                 await task.destroy();
                 const resposta: Retorno = {
@@ -111,12 +111,12 @@ class TaskService {
     }
 
     async putTask(req: Request) {
-        const taskId = req.params.task_id;
-        const { title, userId, describe, time, lastDateStudy } = req.body;
+        const TaskId = req.params.task_id;
+        const { title, UserId, describe, time, lastDateStudy } = req.body;
         try {
-            const task = await Task.findByPk(taskId);
+            const task = await Task.findByPk(TaskId);
         if (task) {
-            await task.update({ title, userId, describe, time, lastDateStudy });
+            await task.update({ title, UserId, describe, time, lastDateStudy });
             
             const resposta: Retorno = {
                 tipo: 'Sucess',

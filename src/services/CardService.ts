@@ -11,7 +11,7 @@ class CardService {
 
     async getCardList(req: Request) {
         try {
-            const cards = await Card.findAll({ where: {subTaskId: req.body.subTaskId},});
+            const cards = await Card.findAll({ where: {SubTaskId: req.body.SubTaskId},});
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: cards
@@ -54,11 +54,11 @@ class CardService {
     }
 
     async postRegisterCard(req: Request) {
-        const { title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated} = req.body;
+        const { title, SubTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated} = req.body;
         try {
-            const subTask = await SubTask.findByPk(subTaskId);
+            const subTask = await SubTask.findByPk(SubTaskId);
             if (subTask) {
-                const newCard = await Card.create({ title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
+                const newCard = await Card.create({ title, SubTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: newCard
@@ -111,11 +111,11 @@ class CardService {
 
     async putCard( req: Request) {
         const cardId = req.params.card_id;
-        const { title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated } = req.body;
+        const { title, SubTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated } = req.body;
         try {
             const card = await Card.findByPk(cardId);
         if (card) {
-            await card.update({ title, subTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
+            await card.update({ title, SubTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
             
             const resposta: Retorno = {
                 tipo: 'Sucess',

@@ -28,8 +28,8 @@ class UserController{
   }
 
   async  postRegisterUser(req: Request, res: Response) {
-    const {loginId, fullName, nickName, birthDate} = req.body;
-    if((loginId != null) && (fullName != null) && (nickName != null) && (birthDate != null)){
+    const {LoginId, fullName, nickName, birthDate} = req.body;
+    if((LoginId != null) && (fullName != null) && (nickName != null) && (birthDate != null)){
     const resposta = await userService.postRegisterUser(req);
     
     if (resposta.tipo == "Sucess"){
@@ -62,8 +62,8 @@ class UserController{
   }
 
   async putUser(req: Request, res: Response) {
-    const {loginId, fullName, nickName, birthDate} = req.body;
-    if((loginId != null) && (fullName != null) && (nickName != null) && (birthDate != null)){
+    const {LoginId, fullName, nickName, birthDate} = req.body;
+    if((LoginId != null) && (fullName != null) && (nickName != null) && (birthDate != null)){
       const resposta = await userService.putUser(req);
       if (resposta.tipo == "Sucess"){
         res.status(200).json(resposta);

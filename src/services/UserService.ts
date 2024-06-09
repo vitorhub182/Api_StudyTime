@@ -11,7 +11,7 @@ class UserService {
 
     async getUserList(req: Request) {
         try {
-            const users = await User.findAll({ where: {loginId: req.body.loginId},});
+            const users = await User.findAll({ where: {LoginId: req.body.LoginId},});
             const resposta: Retorno = {
                 tipo: 'Sucess',
                 description: users
@@ -28,9 +28,9 @@ class UserService {
     }
 
     async getUser(req: Request) {
-        const userId = req.params.user_id;
+        const UserId = req.params.user_id;
         try {
-            const user = await User.findByPk(userId);
+            const user = await User.findByPk(UserId);
             if (user) {
                 const resposta: Retorno = {
                     tipo: 'Sucess',
@@ -54,13 +54,13 @@ class UserService {
     }
 
     async postRegisterUser(req: Request) {
-        const {loginId, fullName, nickName, birthDate} = req.body;
+        const {LoginId, fullName, nickName, birthDate} = req.body;
         try {
             
-            const login = await Login.findByPk(loginId);
+            const login = await Login.findByPk(LoginId);
 
             if (login) {
-                const newUser = await User.create({ loginId, fullName, nickName, birthDate });
+                const newUser = await User.create({ LoginId, fullName, nickName, birthDate });
             
                 const resposta: Retorno = {
                     tipo: 'Sucess',
@@ -86,9 +86,9 @@ class UserService {
     }
 
     async deleteUser(req: Request) {
-        const userId = req.params.user_id;
+        const UserId = req.params.user_id;
         try {
-            const user = await User.findByPk(userId);
+            const user = await User.findByPk(UserId);
             if (user) {
                 await user.destroy();
                 const resposta: Retorno = {
@@ -113,12 +113,12 @@ class UserService {
     }
 
     async putUser(req: Request) {
-        const userId = req.params.user_id;
-        const {loginId, fullName, nickName, birthDate} = req.body;
+        const UserId = req.params.user_id;
+        const {LoginId, fullName, nickName, birthDate} = req.body;
         try {
-            const user = await User.findByPk(userId);
+            const user = await User.findByPk(UserId);
         if (user) {
-            await user.update({ loginId, fullName, nickName, birthDate });
+            await user.update({ LoginId, fullName, nickName, birthDate });
             
             const resposta: Retorno = {
                 tipo: 'Sucess',
