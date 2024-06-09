@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Task } from '../models/Task';
 
 interface  Retorno {
-    tipo: string;
+    status: string;
     description: any;
   }
 
@@ -13,14 +13,14 @@ class SubTaskService {
         try {
             const subtasks = await SubTask.findAll({ where: {TaskId: req.body.TaskId},});
             const resposta: Retorno = {
-                tipo: 'Sucess',
+                status: 'SUCESS',
                 description: subtasks
               };
             return resposta;
         } catch (error) {
             console.log(error);
             const resposta: Retorno = {
-            tipo: 'Error',
+            status: 'Error',
             description: error
             };
             return resposta;
@@ -33,20 +33,20 @@ class SubTaskService {
             const subtask = await SubTask.findByPk(subTaskId);
             if (subtask) {
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: subtask
                   };        
                 return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -61,14 +61,14 @@ class SubTaskService {
             if (task) {
                 const newSubTask = await SubTask.create({ title, TaskId, describe, time, lastDateStudy});
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: newSubTask
                 };
             return resposta;
 
             } else {
                 const resposta: Retorno = {
-                    tipo: 'Error',
+                    status: 'Error',
                     description: 'NOT FOUND'
                   };
                   return resposta;
@@ -76,7 +76,7 @@ class SubTaskService {
 
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -90,20 +90,20 @@ class SubTaskService {
             if (subtask) {
                 await subtask.destroy();
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: subtask
                   };        
                 return resposta;
             } else {
                 const resposta: Retorno = {
-                    tipo: 'Error',
+                    status: 'Error',
                     description: 'NOT FOUND'
                   };
                   return resposta;
             }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -119,21 +119,21 @@ class SubTaskService {
             await subtask.update({ title, TaskId, describe, time, lastDateStudy });
             
             const resposta: Retorno = {
-                tipo: 'Sucess',
-                description: subtask
+                status: 'SUCESS',
+                description: 'UPDATED'
             };
 
             return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;

@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { SubTask } from '../models/SubTask';
 
 interface  Retorno {
-    tipo: string;
+    status: string;
     description: any;
   }
 
@@ -13,14 +13,14 @@ class CardService {
         try {
             const cards = await Card.findAll({ where: {SubTaskId: req.body.SubTaskId},});
             const resposta: Retorno = {
-                tipo: 'Sucess',
+                status: 'SUCESS',
                 description: cards
               };
             return resposta;
         } catch (error) {
             console.log(error);
             const resposta: Retorno = {
-            tipo: 'Error',
+            status: 'Error',
             description: error
             };
             return resposta;
@@ -33,20 +33,20 @@ class CardService {
             const card = await Card.findByPk(cardId);
             if (card) {
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: card
                   };        
                 return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -60,13 +60,13 @@ class CardService {
             if (subTask) {
                 const newCard = await Card.create({ title, SubTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
             const resposta: Retorno = {
-                tipo: 'Sucess',
+                status: 'SUCESS',
                 description: newCard
             };
             return resposta;
             } else {
                 const resposta: Retorno = {
-                    tipo: 'Error',
+                    status: 'Error',
                     description: 'NOT FOUND'
                   };
                   return resposta;
@@ -75,7 +75,7 @@ class CardService {
 
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -89,20 +89,20 @@ class CardService {
             if (card) {
                 await card.destroy();
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: card
                   };        
                 return resposta;
             } else {
                 const resposta: Retorno = {
-                    tipo: 'Error',
+                    status: 'Error',
                     description: 'NOT FOUND'
                   };
                   return resposta;
             }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -118,21 +118,21 @@ class CardService {
             await card.update({ title, SubTaskId, question, answer, lastDateStudy, nextDateStudy, cardActivated });
             
             const resposta: Retorno = {
-                tipo: 'Sucess',
-                description: card
+                status: 'SUCESS',
+                description: 'UPDATED'
             };
 
             return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;

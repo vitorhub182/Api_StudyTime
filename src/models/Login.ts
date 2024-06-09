@@ -16,7 +16,6 @@ Login.init(
     username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -25,7 +24,6 @@ Login.init(
     email:{
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     }
   },
   {
@@ -50,16 +48,3 @@ connection.sync({alter:true})
 .catch(error => {
   console.error('Erro na sincronização das tabelas:', error);
 });
-
-
-/*
-(async () => {
-  await connection.sync({alter:true})
-  .then(() => {
-    console.log('Tabela Login sincronizada');
-  })
-  .catch(error => {
-    console.error('Erro ao sincronizar a tabela Login:', error);
-  });
-})();
-*/

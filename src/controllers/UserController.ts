@@ -6,7 +6,7 @@ class UserController{
 
   async  getUserList(req: Request, res: Response) {
     const resposta = await userService.getUserList(req);
-    if (resposta.tipo == "Sucess"){
+    if (resposta.status == "SUCESS"){
       res.status(200).json(resposta);
     }else{
       console.error('Erro ao obter lista de usuarios:', resposta);
@@ -16,7 +16,7 @@ class UserController{
 
   async  getUser(req: Request, res: Response) {
     const resposta =  await userService.getUser(req);
-    if (resposta.tipo == "Sucess"){
+    if (resposta.status == "SUCESS"){
       res.status(200).json(resposta);
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Usuario não encontrado'})
@@ -32,32 +32,34 @@ class UserController{
     if((LoginId != null) && (fullName != null) && (nickName != null) && (birthDate != null)){
     const resposta = await userService.postRegisterUser(req);
     
-    if (resposta.tipo == "Sucess"){
-      res.status(201).json(resposta);
+    if (resposta.status == "SUCESS"){
+      res.status(201).json({
+        status: 'Registrado',
+        id: resposta.description.id});
 
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Usuario não encontrado'})
     
     }else{
-      console.error('Erro ao obter usuario:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter usuario' });
+      console.error('Erro ao inserir usuario:', resposta.description);
+      res.status(500).json({ error: 'Erro ao inserir usuario' });
     }
     }else{
-    res.status(400).json({Error: "Parâmetros invalidos"});
+    res.status(400).json({error: "Parâmetros invalidos"});
     }
   }
 
   async deleteUser(req: Request, res: Response) {
     const resposta = await userService.deleteUser(req);
-    if (resposta.tipo == "Sucess"){
-      res.status(200).json(resposta);
+    if (resposta.status == "SUCESS"){
+      res.status(200).json({status: "Deletado"});
 
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Usuario não encontrado'})
     
     }else{
-      console.error('Erro ao obter usuario:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter usuario' });
+      console.error('Erro ao deletar usuario:', resposta.description);
+      res.status(500).json({ error: 'Erro ao deletar usuario' });
     }
   }
 
@@ -65,19 +67,19 @@ class UserController{
     const {LoginId, fullName, nickName, birthDate} = req.body;
     if((LoginId != null) && (fullName != null) && (nickName != null) && (birthDate != null)){
       const resposta = await userService.putUser(req);
-      if (resposta.tipo == "Sucess"){
-        res.status(200).json(resposta);
+      if (resposta.status == "SUCESS"){
+        res.status(200).json({status: "Atualizado"});
 
       }else if (resposta.description == "NOT FOUND"){
         res.status(404).json({ status: 'Usuario não encontrado'})
       
       }else{
-        console.error('Erro ao obter usuario:', resposta.description);
-        res.status(500).json({ error: 'Erro ao obter usuario' });
+        console.error('Erro ao atualizar usuario:', resposta.description);
+        res.status(500).json({ error: 'Erro ao atualizar usuario' });
       }
 
     }else{
-      res.status(400).json({Error: "Parâmetros invalidos"});
+      res.status(400).json({error: "Parâmetros invalidos"});
     }
   }
 }

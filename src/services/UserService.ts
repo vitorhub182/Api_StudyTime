@@ -3,7 +3,7 @@ import {User} from '../models/User';
 import { Request, Response } from 'express';
 
 interface  Retorno {
-    tipo: string;
+    status: string;
     description: any;
   }
 
@@ -13,14 +13,14 @@ class UserService {
         try {
             const users = await User.findAll({ where: {LoginId: req.body.LoginId},});
             const resposta: Retorno = {
-                tipo: 'Sucess',
+                status: 'SUCESS',
                 description: users
               };
             return resposta;
         } catch (error) {
             console.log(error);
             const resposta: Retorno = {
-            tipo: 'Error',
+            status: 'Error',
             description: error
             };
             return resposta;
@@ -33,20 +33,20 @@ class UserService {
             const user = await User.findByPk(UserId);
             if (user) {
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: user
                   };        
                 return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -63,14 +63,14 @@ class UserService {
                 const newUser = await User.create({ LoginId, fullName, nickName, birthDate });
             
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: newUser
                 };
     
                 return resposta;
             } else {
                 const resposta: Retorno = {
-                    tipo: 'Error',
+                    status: 'Error',
                     description: 'NOT FOUND'
                   };
                   return resposta;
@@ -78,7 +78,7 @@ class UserService {
 
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -92,20 +92,20 @@ class UserService {
             if (user) {
                 await user.destroy();
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: user
                   };        
                 return resposta;
             } else {
                 const resposta: Retorno = {
-                    tipo: 'Error',
+                    status: 'Error',
                     description: 'NOT FOUND'
                   };
                   return resposta;
             }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -121,21 +121,21 @@ class UserService {
             await user.update({ LoginId, fullName, nickName, birthDate });
             
             const resposta: Retorno = {
-                tipo: 'Sucess',
-                description: user
+                status: 'SUCESS',
+                description: 'UPDATED'
             };
 
             return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;

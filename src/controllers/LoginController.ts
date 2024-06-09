@@ -6,7 +6,7 @@ class LoginController{
 
   async getLoginList(req: Request, res: Response) {
     const resposta = await loginService.getLoginList();
-    if (resposta.tipo == "Sucess"){
+    if (resposta.status == "SUCESS"){
       res.status(200).json(resposta);
     }else{
       console.error('Erro ao obter lista de login:', resposta);
@@ -16,7 +16,7 @@ class LoginController{
 
   async getLogin(req: Request, res: Response) {
     const resposta =  await loginService.getLogin(req);
-    if (resposta.tipo == "Sucess"){
+    if (resposta.status == "SUCESS"){
       res.status(200).json(resposta);
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Login não encontrado'})
@@ -32,32 +32,35 @@ class LoginController{
     if((username != null) && (password != null) && (email != null)){
     const resposta = await loginService.postRegisterLogin(req);
     
-    if (resposta.tipo == "Sucess"){
-      res.status(201).json(resposta);
+    if (resposta.status == "SUCESS"){
+      res.status(201).json({
+        status: 'Registrado',
+        id: resposta.description.id
+      });
   
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Login não encontrado'})
     
     }else{
-      console.error('Erro ao obter login:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter login' });
+      console.error('Erro ao inserir o login:', resposta.description);
+      res.status(500).json({ error: 'Erro ao inserir o login' });
     }
   }else{
-    res.status(400).json({Error: "Parâmetros invalidos"});
+    res.status(400).json({error: "Parâmetros invalidos"});
   }
   }
   
   async deleteLogin(req: Request, res: Response) {
     const resposta = await loginService.deleteLogin(req);
-    if (resposta.tipo == "Sucess"){
-      res.status(200).json(resposta);
+    if (resposta.status == "SUCESS"){
+      res.status(200).json({status: "Deletado"});
   
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Login não encontrado'})
     
     }else{
-      console.error('Erro ao obter login:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter login' });
+      console.error('Erro ao deletar login:', resposta.description);
+      res.status(500).json({ error: 'Erro ao deletar login' });
     }
   }
   
@@ -65,19 +68,19 @@ class LoginController{
     const {username, password, email} = req.body;
     if((username != null) && (password != null) && (email != null)){
     const resposta = await loginService.putLogin(req);
-    if (resposta.tipo == "Sucess"){
-      res.status(200).json(resposta);
+    if (resposta.status == "SUCESS"){
+      res.status(200).json({status: "Atualizado"});
   
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Login não encontrado'})
     
     }else{
-      console.error('Erro ao obter login:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter login' });
+      console.error('Erro ao atualizar login:', resposta.description);
+      res.status(500).json({ error: 'Erro ao atualizar login' });
     }
     
   }else{
-    res.status(400).json({Error: "Parâmetros invalidos"});
+    res.status(400).json({error: "Parâmetros invalidos"});
   }
   }
 }

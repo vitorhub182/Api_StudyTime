@@ -6,7 +6,7 @@ class TaskController{
 
   async  getTaskList(req: Request, res: Response) {
     const resposta = await taskService.getTaskList(req);
-    if (resposta.tipo == "Sucess"){
+    if (resposta.status == "SUCESS"){
       res.status(200).json(resposta);
     }else{
       console.error('Erro ao obter lista de task:', resposta);
@@ -16,7 +16,7 @@ class TaskController{
 
   async getTask(req: Request, res: Response) {
     const resposta =  await taskService.getTask(req);
-    if (resposta.tipo == "Sucess"){
+    if (resposta.status == "SUCESS"){
       res.status(200).json(resposta);
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Task não encontrado'})
@@ -31,32 +31,34 @@ class TaskController{
     const {title, UserId} = req.body;
     if((title != null) && (UserId!= null)){
     const resposta = await taskService.postRegisterTask(req);
-    if (resposta.tipo == "Sucess"){
-      res.status(201).json(resposta);
+    if (resposta.status == "SUCESS"){
+      res.status(201).json({
+        status: 'Registrado',
+        id: resposta.description.id});
   
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Task não encontrado'})
     
     }else{
-      console.error('Erro ao obter task:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter task' });
+      console.error('Erro ao inserir task:', resposta.description);
+      res.status(500).json({ error: 'Erro ao inserir task' });
     }
   }else{
-    res.status(400).json({Error: "Parâmetros invalidos"});
+    res.status(400).json({error: "Parâmetros invalidos"});
   }
   }
   
   async deleteTask(req: Request, res: Response) {
     const resposta = await taskService.deleteTask(req);
-    if (resposta.tipo == "Sucess"){
-      res.status(200).json(resposta);
+    if (resposta.status == "SUCESS"){
+      res.status(200).json({status: "Deletado"});
   
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Task não encontrado'})
     
     }else{
-      console.error('Erro ao obter task:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter task' });
+      console.error('Erro ao deletar task:', resposta.description);
+      res.status(500).json({ error: 'Erro ao deletar task' });
     }
   }
   
@@ -64,19 +66,19 @@ class TaskController{
     const {title, UserId} = req.body;
     if((title != null) && (UserId != null)){
     const resposta = await taskService.putTask(req);
-    if (resposta.tipo == "Sucess"){
-      res.status(200).json(resposta);
+    if (resposta.status == "SUCESS"){
+      res.status(200).json({status: "Atualizado"});
   
     }else if (resposta.description == "NOT FOUND"){
       res.status(404).json({ status: 'Task não encontrado'})
     
     }else{
-      console.error('Erro ao obter task:', resposta.description);
-      res.status(500).json({ error: 'Erro ao obter task' });
+      console.error('Erro ao atualizar task:', resposta.description);
+      res.status(500).json({ error: 'Erro ao atualizar task' });
     }
     
   }else{
-    res.status(400).json({Error: "Parâmetros invalidos"});
+    res.status(400).json({error: "Parâmetros invalidos"});
   }
   }
 }

@@ -2,7 +2,7 @@ import {Login} from '../models/Login';
 import { Request, Response } from 'express';
 
 interface  Retorno {
-    tipo: string;
+    status: string;
     description: any;
   }
 
@@ -12,14 +12,14 @@ class LoginService {
         try {
             const logins = await Login.findAll();
             const resposta: Retorno = {
-                tipo: 'Sucess',
+                status: 'SUCESS',
                 description: logins
               };
             return resposta;
         } catch (error) {
             console.log(error);
             const resposta: Retorno = {
-            tipo: 'Error',
+            status: 'Error',
             description: error
             };
             return resposta;
@@ -32,20 +32,20 @@ class LoginService {
             const login = await Login.findByPk(loginId);
             if (login) {
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: login
                   };        
                 return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -55,16 +55,18 @@ class LoginService {
     async postRegisterLogin(req: Request) {
         const { username, password, email } = req.body;
         try {
+
+
             const newLogin = await Login.create({ username, password, email });
             const resposta: Retorno = {
-                tipo: 'Sucess',
+                status: 'SUCESS',
                 description: newLogin
             };
             return resposta;
 
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -78,20 +80,20 @@ class LoginService {
             if (login) {
                 await login.destroy();
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: login
                   };        
                 return resposta;
             } else {
                 const resposta: Retorno = {
-                    tipo: 'Error',
+                    status: 'Error',
                     description: 'NOT FOUND'
                   };
                   return resposta;
             }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -107,21 +109,21 @@ class LoginService {
             await login.update({ username, password, email });
             
             const resposta: Retorno = {
-                tipo: 'Sucess',
-                description: login
+                status: 'SUCESS',
+                description: 'UPDATED'
             };
 
             return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;

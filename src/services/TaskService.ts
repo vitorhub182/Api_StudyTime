@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '../models/User';
 
 interface  Retorno {
-    tipo: string;
+    status: string;
     description: any;
   }
 
@@ -13,14 +13,14 @@ class TaskService {
         try {
             const tasks = await Task.findAll({ where: {UserId: req.body.UserId},});
             const resposta: Retorno = {
-                tipo: 'Sucess',
+                status: 'SUCESS',
                 description: tasks
               };
             return resposta;
         } catch (error) {
             console.log(error);
             const resposta: Retorno = {
-            tipo: 'Error',
+            status: 'Error',
             description: error
             };
             return resposta;
@@ -33,20 +33,20 @@ class TaskService {
             const task = await Task.findByPk(TaskId);
             if (task) {
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: task
                   };        
                 return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -61,14 +61,14 @@ class TaskService {
             if (user) {
                 const newTask = await Task.create({ title, UserId, describe, time, lastDateStudy});
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: newTask
                 };
             return resposta;
 
             } else {
                 const resposta: Retorno = {
-                    tipo: 'Error',
+                    status: 'Error',
                     description: 'NOT FOUND'
                   };
                   return resposta;
@@ -76,7 +76,7 @@ class TaskService {
 
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -90,20 +90,20 @@ class TaskService {
             if (task) {
                 await task.destroy();
                 const resposta: Retorno = {
-                    tipo: 'Sucess',
+                    status: 'SUCESS',
                     description: task
                   };        
                 return resposta;
             } else {
                 const resposta: Retorno = {
-                    tipo: 'Error',
+                    status: 'Error',
                     description: 'NOT FOUND'
                   };
                   return resposta;
             }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
@@ -119,21 +119,21 @@ class TaskService {
             await task.update({ title, UserId, describe, time, lastDateStudy });
             
             const resposta: Retorno = {
-                tipo: 'Sucess',
-                description: task
+                status: 'SUCESS',
+                description: 'UPDATED'
             };
 
             return resposta;
         } else {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: 'NOT FOUND'
               };
               return resposta;
         }
         } catch (error) {
             const resposta: Retorno = {
-                tipo: 'Error',
+                status: 'Error',
                 description: error
               };
               return resposta;
