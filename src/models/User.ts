@@ -18,13 +18,16 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    nickName: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique:true,
     },
-    birthDate:{ 
-      type: DataTypes.DATE,
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email:{
+      type: DataTypes.STRING,
       allowNull: false,
     }
   },

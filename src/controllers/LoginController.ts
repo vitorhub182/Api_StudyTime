@@ -1,4 +1,4 @@
-import LoginService from "../services/LoginService";
+/*import LoginService from "../services/LoginService";
 const loginService = new LoginService();
 import { Request, Response } from 'express';
 
@@ -85,3 +85,4 @@ class LoginController{
   }
 }
 export default LoginController;
+*/

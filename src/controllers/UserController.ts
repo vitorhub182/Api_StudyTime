@@ -1,6 +1,6 @@
 import UserService from "../services/UserService";
 const userService = new UserService();
-import { Request, Response } from 'express';
+import e, { Request, Response } from 'express';
 
 class UserController{
 
@@ -27,9 +27,28 @@ class UserController{
     }
   }
 
+  
+  async  getLogin(req: Request, res: Response) {
+    const {email, password} = req.body;
+    if (email && password){
+    const resposta =  await userService.getLogin(req.body);
+    if (resposta.status == "SUCESS"){
+      res.status(200).json(resposta);
+    }else if (resposta.description == "NOT FOUND"){
+      res.status(404).json({ status: 'Usuario não encontrado'})
+    
+    }else{
+      console.error('Erro ao obter usuario:', resposta.description);
+      res.status(500).json({ error: 'Erro ao obter usuario' });
+    }
+  }else {
+    res.status(400).json({error: "Parâmetros invalidos"});
+  }
+  }
+
   async  postRegisterUser(req: Request, res: Response) {
-    const {LoginId, fullName, nickName, birthDate} = req.body;
-    if((LoginId != null) && (fullName != null) && (nickName != null) && (birthDate != null)){
+    const {fullName, username, password, email} = req.body;
+    if( ((email != null) != null) && (password != null) && (username != null) && (fullName != null)){
     const resposta = await userService.postRegisterUser(req);
     
     if (resposta.status == "SUCESS"){

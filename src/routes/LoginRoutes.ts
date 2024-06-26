@@ -1,3 +1,5 @@
+
+/*
 import {express} from '../utils/pacotes';
 import LoginController from '../controllers/LoginController';
 const loginController = new LoginController();
@@ -10,3 +12,4 @@ router.delete('/LOGIN=:login_id', loginController.deleteLogin);
 router.put('/LOGIN=:login_id', loginController.putLogin);
 
 module.exports = router;
+*/

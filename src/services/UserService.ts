@@ -1,6 +1,9 @@
-import { Login } from '../models/Login';
+//import { Login } from '../models/Login';
 import {User} from '../models/User';
 import { Request, Response } from 'express';
+import { connection } from '../utils/pacotes';
+const { QueryTypes } = require('sequelize');
+
 
 interface  Retorno {
     status: string;
@@ -26,6 +29,36 @@ class UserService {
             return resposta;
         }
     }
+    async getLogin(req: Request) {
+        const {email, password} = req.body;
+        try {
+            const user = await connection.query('SELECT * FROM users WHERE email = ? and password = ?', {
+                replacements: [email, password],
+                type: QueryTypes.SELECT,
+              });
+            if (user) {
+                const resposta: Retorno = {
+                    status: 'SUCESS',
+                    description: user
+                  };        
+                return resposta;
+        } else {
+            const resposta: Retorno = {
+                status: 'Error',
+                description: 'NOT FOUND'
+              };
+              return resposta;
+        }
+        } catch (error) {
+            const resposta: Retorno = {
+                status: 'Error',
+                description: error
+              };
+              return resposta;
+        }
+    }
+
+
 
     async getUser(req: Request) {
         const UserId = req.params.user_id;
@@ -54,13 +87,13 @@ class UserService {
     }
 
     async postRegisterUser(req: Request) {
-        const {LoginId, fullName, nickName, birthDate} = req.body;
+        const {fullName, username, password, email} = req.body;
         try {
             
-            const login = await Login.findByPk(LoginId);
+            const login = await User;
 
-            if (login) {
-                const newUser = await User.create({ LoginId, fullName, nickName, birthDate });
+            if (fullName && username && password && email) {
+                const newUser = await User.create({fullName, username,password,email });
             
                 const resposta: Retorno = {
                     status: 'SUCESS',

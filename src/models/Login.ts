@@ -1,3 +1,4 @@
+/*
 import { connection } from "../utils/pacotes";
 import { User } from "./User";
 const { DataTypes, Model } = require('sequelize');
@@ -48,3 +49,4 @@ connection.sync({alter:true})
 .catch(error => {
   console.error('Erro na sincronização das tabelas:', error);
 });
+*/

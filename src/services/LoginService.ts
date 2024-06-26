@@ -1,3 +1,4 @@
+/*
 import {Login} from '../models/Login';
 import { Request, Response } from 'express';
 
@@ -132,3 +133,4 @@ class LoginService {
   }
 
 export default LoginService;
+*/
