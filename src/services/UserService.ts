@@ -89,8 +89,6 @@ class UserService {
     async postRegisterUser(req: Request) {
         const {fullName, username, password, email} = req.body;
         try {
-            
-            const login = await User;
 
             if (fullName && username && password && email) {
                 const newUser = await User.create({fullName, username,password,email });

@@ -2,7 +2,7 @@
 import express from 'express';
 const app = express();
 
-const loginRoutes = require('./routes/LoginRoutes');
+//const loginRoutes = require('./routes/LoginRoutes');
 const userRoutes = require('./routes/UserRoutes');
 const taskRoutes = require('./routes/TaskRoutes');
 const subTaskRoutes = require('./routes/SubTaskRoutes');
@@ -12,7 +12,7 @@ const cardRoutes = require('./routes/CardRoutes');
 app.use(express.json());    
 app.use(express.urlencoded({ extended: true}));
 
-app.use('/login', loginRoutes);
+//app.use('/login', loginRoutes);
 app.use('/user', userRoutes);
 app.use('/task', taskRoutes);
 app.use('/subtask', subTaskRoutes);
