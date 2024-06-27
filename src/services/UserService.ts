@@ -29,8 +29,8 @@ class UserService {
             return resposta;
         }
     }
-    async getLogin(req: Request) {
-        const {email, password} = req.body;
+    async getLogin(email: string, password: string) {
+
         try {
             const user = await connection.query('SELECT * FROM users WHERE email = ? and password = ?', {
                 replacements: [email, password],
@@ -86,26 +86,16 @@ class UserService {
         }
     }
 
-    async postRegisterUser(req: Request) {
-        const {fullName, username, password, email} = req.body;
+    async postRegisterUser(email: string, password: string,username: string, fullName: string ) {
         try {
-
-            if (fullName && username && password && email) {
-                const newUser = await User.create({fullName, username,password,email });
+            
+                const newUser = await User.create({fullName,username,password,email});
             
                 const resposta: Retorno = {
                     status: 'SUCESS',
                     description: newUser
                 };
-    
                 return resposta;
-            } else {
-                const resposta: Retorno = {
-                    status: 'Error',
-                    description: 'NOT FOUND'
-                  };
-                  return resposta;
-            }
 
         } catch (error) {
             const resposta: Retorno = {

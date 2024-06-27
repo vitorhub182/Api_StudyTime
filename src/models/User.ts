@@ -43,8 +43,8 @@ User.hasMany(Task, { onDelete: 'CASCADE'});
 Task.belongsTo(User);
 
 
-/*
 
+/*
 (async () => {
   await connection.sync({alter:true})
   .then(() => {

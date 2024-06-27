@@ -29,9 +29,10 @@ class UserController{
 
   
   async  getLogin(req: Request, res: Response) {
+    try {
     const {email, password} = req.body;
     if (email && password){
-    const resposta =  await userService.getLogin(req.body);
+    const resposta =  await userService.getLogin(req.body.email, req.body.password);
     if (resposta.status == "SUCESS"){
       res.status(200).json(resposta);
     }else if (resposta.description == "NOT FOUND"){
@@ -44,12 +45,15 @@ class UserController{
   }else {
     res.status(400).json({error: "Parâmetros invalidos"});
   }
+  } catch {
+    res.status(500).json({error: "Falha interna"});
+  }
   }
 
   async  postRegisterUser(req: Request, res: Response) {
     const {fullName, username, password, email} = req.body;
-    if( ((email != null) != null) && (password != null) && (username != null) && (fullName != null)){
-    const resposta = await userService.postRegisterUser(req);
+    if( (email != null) && (password != null) && (username != null) && (fullName != null)){
+    const resposta = await userService.postRegisterUser(email, password, username,fullName );
     
     if (resposta.status == "SUCESS"){
       res.status(201).json({
