@@ -5,7 +5,7 @@ FROM node:20.13.1
 WORKDIR /api
 
 # Copiar package.json e package-lock.json
-COPY src/package*.json ./
+COPY package*.json .
 
 # Instalar as dependências
 RUN npm install

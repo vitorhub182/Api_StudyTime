@@ -1,5 +1,4 @@
-
-import app from './app'; // crio o serviço da aplicação 
+import app from './app'; // crio o serviço da aplicação
 const http = require('http'); // crio o serviço http
 //const port = process.env.DB_APP_PORT; // defino a porta padrão // process.env.PORT ||
 const port = 3001; // defino a porta padrão // process.env.PORT ||

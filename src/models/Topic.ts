@@ -1,10 +1,11 @@
 import { connection } from '../utils/pacotes';
+import { SubTopic } from './SubTopic';
 
 const { DataTypes, Model } = require('sequelize');
 
-export class Card extends Model {}
+export class Topic extends Model {}
 
-Card.init(
+Topic.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,31 +13,37 @@ Card.init(
       primaryKey: true,
       unique: true,
     },
-    question: {
+    title: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    time: {
+      type: DataTypes.TIME,
       allowNull: true,
     },
-    answer: {
-      type: DataTypes.STRING,
+    lastDateStudy: {
+      type: DataTypes.DATE,
       allowNull: true,
     },
   },
   {
     sequelize: connection,
-    modelName: 'Card',
-    tableName: 'cards',
+    modelName: 'Topic',
+    tableName: 'topics',
     timestamps: true,
   }
 );
+
+Topic.hasMany(SubTopic, { onDelete: 'CASCADE' });
+SubTopic.belongsTo(Topic);
 
 
 // (async () => {
 //   await connection.sync({alter:true, force: true})
 //   .then(() => {
-//     console.log('Tabela Card sincronizada');
+//     console.log('Tabela Topic sincronizada');
 //   })
 //   .catch(error => {
-//     console.error('Erro ao sincronizar a tabela Card:', error);
+//     console.error('Erro ao sincronizar a tabela Topic:', error);
 //   });
 // })();
-

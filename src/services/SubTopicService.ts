@@ -1,24 +1,22 @@
-import { Card } from '../models/Card';
-import { Request } from 'express';
 import { SubTopic } from '../models/SubTopic';
+import { Request } from 'express';
+import { Topic } from '../models/Topic';
 
 interface Retorno {
   status: string;
   description: any;
 }
 
-class CardService {
-  async getCardList(req: Request) {
+class SubTopicService {
+  async getSubTopicList(req: Request) {
     try {
-      console.log(req.params);
-      const subtopicId = parseInt(req.params.subtopicId);
-      const cards = await Card.findAll({
-        where: { SubTopicId: subtopicId },
+      const topicId = parseInt(req.params.topicId);
+      const subtopics = await SubTopic.findAll({
+        where: { TopicId: topicId },
       });
-      console.log(cards);
       const resposta: Retorno = {
         status: 'SUCESS',
-        description: cards,
+        description: subtopics,
       };
       return resposta;
     } catch (error) {
@@ -31,14 +29,14 @@ class CardService {
     }
   }
 
-  async getCard(req: Request) {
-    const cardId = req.params.card_id;
+  async getSubTopic(req: Request) {
+    const subtopicId = req.params.subTopic_id;
     try {
-      const card = await Card.findByPk(cardId);
-      if (card) {
+      const subtopic = await SubTopic.findByPk(subtopicId);
+      if (subtopic) {
         const resposta: Retorno = {
           status: 'SUCESS',
-          description: card,
+          description: subtopic,
         };
         return resposta;
       } else {
@@ -57,92 +55,72 @@ class CardService {
     }
   }
 
-  async postRegisterCard(req: Request) {
-    const {
-      subtopicId,
-      question,
-      answer,
-    } = req.body;
+  async postRegisterSubTopic(req: Request) {
+    const { title, topicId, time, lastDateStudy } = req.body;
     try {
-      const subTopic = await SubTopic.findByPk(subtopicId);
-      if (subTopic) {
-        const newCard = await Card.create({
-          SubTopicId: parseInt(subtopicId),
-          question,
-          answer,
-        });
-        const resposta: Retorno = {
-          status: 'SUCESS',
-          description: newCard,
-        };
-        return resposta;
-      } else {
-        const resposta: Retorno = {
-          status: 'Error',
-          description: 'NOT FOUND',
-        };
-        return resposta;
-      }
-    } catch (error) {
-      const resposta: Retorno = {
-        status: 'Error',
-        description: error,
-      };
-      return resposta;
-    }
-  }
-
-  async deleteCard(req: Request) {
-    const cardId = req.params.cardId;
-    console.log('DELETE ID:', cardId);
-    try {
-      const card = await Card.findByPk(cardId);
-      if (card) {
-        await card.destroy();
-        const resposta: Retorno = {
-          status: 'SUCESS',
-          description: card,
-        };
-        return resposta;
-      } else {
-        const resposta: Retorno = {
-          status: 'Error',
-          description: 'NOT FOUND',
-        };
-        return resposta;
-      }
-    } catch (error) {
-      const resposta: Retorno = {
-        status: 'Error',
-        description: error,
-      };
-      return resposta;
-    }
-  }
-
-  async putCard(req: Request) {
-    const cardId = req.params.card_id;
-    const {
-      title,
-      subtopicId,
-      question,
-      answer,
-      lastDateStudy,
-      nextDateStudy,
-      cardActivated,
-    } = req.body;
-    try {
-      const card = await Card.findByPk(cardId);
-      if (card) {
-        await card.update({
+      const topic = await Topic.findByPk(topicId);
+      if (topic) {
+        const newSubTopic = await SubTopic.create({
           title,
-          subtopicId,
-          question,
-          answer,
+          TopicId: parseInt(topicId),
+          time,
           lastDateStudy,
-          nextDateStudy,
-          cardActivated,
         });
+        const resposta: Retorno = {
+          status: 'SUCESS',
+          description: newSubTopic,
+        };
+        return resposta;
+      } else {
+        const resposta: Retorno = {
+          status: 'Error',
+          description: 'NOT FOUND',
+        };
+        return resposta;
+      }
+    } catch (error) {
+      const resposta: Retorno = {
+        status: 'Error',
+        description: error,
+      };
+      return resposta;
+    }
+  }
+
+  async deleteSubTopic(req: Request) {
+    const subtopicId = req.params.subTopic_id;
+    try {
+      const subtopic = await SubTopic.findByPk(subtopicId);
+      if (subtopic) {
+        await subtopic.destroy();
+        const resposta: Retorno = {
+          status: 'SUCESS',
+          description: subtopic,
+        };
+        return resposta;
+      } else {
+        const resposta: Retorno = {
+          status: 'Error',
+          description: 'NOT FOUND',
+        };
+        return resposta;
+      }
+    } catch (error) {
+      const resposta: Retorno = {
+        status: 'Error',
+        description: error,
+      };
+      return resposta;
+    }
+  }
+
+  async putSubTopic(req: Request) {
+    const subtopicId = req.params.subTopic_id;
+    const { title, topicId, describe, time, lastDateStudy } = req.body;
+    try {
+      const subtopic = await SubTopic.findByPk(subtopicId);
+      if (subtopic) {
+        await subtopic.update({ title, topicId, describe, time, lastDateStudy });
 
         const resposta: Retorno = {
           status: 'SUCESS',
@@ -167,4 +145,4 @@ class CardService {
   }
 }
 
-export default CardService;
+export default SubTopicService;

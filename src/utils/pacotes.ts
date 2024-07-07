@@ -1,5 +1,5 @@
 import express from 'express';
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
 
 /*
 const connection = new Sequelize(
@@ -13,17 +13,9 @@ const connection = new Sequelize(
 );
 */
 
-const connection = new Sequelize(
-  'study_time',
-  'root',
-  'cefetmg',
-  {
-    host: 'localhost',
-    dialect: 'postgres', 
-  }
-);
+const connection = new Sequelize('study_time', 'root', 'cefetmg', {
+  host: 'postgres_study_time',
+  dialect: 'postgres',
+});
 
-export {
-    connection,
-    express
-};
+export { connection, express };

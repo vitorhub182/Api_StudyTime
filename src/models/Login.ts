@@ -2,16 +2,13 @@
 import { connection } from "../utils/pacotes";
 import { User } from "./User";
 const { DataTypes, Model } = require('sequelize');
-const { v4: uuidv4 } = require('uuid');
 
 export class Login extends Model {}
 
 Login.init(
   {
-    id:{
-      type: DataTypes.UUID,
-      defaultValue: uuidv4,
-      allowNull: false,
+    id: {
+      type: DataTypes.INTEGER,
       primaryKey: true,
     },
     username: {
@@ -22,25 +19,20 @@ Login.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email:{
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
   },
   {
     sequelize: connection,
     modelName: 'Login',
     tableName: 'logins',
     timestamps: true,
-  },
+  }
 );
 
-Login.beforeCreate(login => login.id = uuidv4());
-
-
-Login.hasOne(User, { onDelete: 'CASCADE'});
-User.belongsTo(Login);
-
+Login.hasOne(User, { onDelete: 'CASCADE' });
 
 connection.sync({alter:true})
 .then(() => {
