@@ -50,7 +50,7 @@ class CardController {
   async deleteCard(req: Request, res: Response) {
     const resposta = await cardService.deleteCard(req);
     if (resposta.status == 'SUCESS') {
-      res.status(200).json({ status: 'Deletado' });
+      res.status(200).json({ id: resposta.description });
     } else if (resposta.description == 'NOT FOUND') {
       res.status(404).json({ status: 'Card não encontrado' });
     } else {

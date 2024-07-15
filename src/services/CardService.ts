@@ -93,15 +93,14 @@ class CardService {
   }
 
   async deleteCard(req: Request) {
-    const cardId = req.params.cardId;
-    console.log('DELETE ID:', cardId);
+    const cardId = parseInt(req.params.cardId);
     try {
       const card = await Card.findByPk(cardId);
       if (card) {
         await card.destroy();
         const resposta: Retorno = {
           status: 'SUCESS',
-          description: card,
+          description: cardId,
         };
         return resposta;
       } else {
