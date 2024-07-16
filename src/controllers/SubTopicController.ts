@@ -48,7 +48,7 @@ class SubTopicController {
   async deleteSubTopic(req: Request, res: Response) {
     const resposta = await subTopicService.deleteSubTopic(req);
     if (resposta.status == 'SUCESS') {
-      res.status(200).json({ status: 'Deletado' });
+      res.status(200).json({ id: resposta.description });
     } else if (resposta.description == 'NOT FOUND') {
       res.status(404).json({ status: 'Subtopic não encontrada' });
     } else {

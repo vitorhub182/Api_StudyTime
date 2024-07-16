@@ -88,14 +88,14 @@ class SubTopicService {
   }
 
   async deleteSubTopic(req: Request) {
-    const subtopicId = req.params.subTopic_id;
+    const subtopicId = parseInt(req.params.subTopic_id);
     try {
       const subtopic = await SubTopic.findByPk(subtopicId);
       if (subtopic) {
         await subtopic.destroy();
         const resposta: Retorno = {
           status: 'SUCESS',
-          description: subtopic,
+          description: subtopicId,
         };
         return resposta;
       } else {

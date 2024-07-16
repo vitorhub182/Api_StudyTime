@@ -11,7 +11,11 @@ class TopicService {
   async getTopicList(req: Request) {
     try {
       const userId = parseInt(req.params.userId);
-      const topics = await Topic.findAll({ where: { UserId: userId } });
+      const topics = await Topic.findAll({ 
+        where: { UserId: userId },
+        order: [['lastDateStudy', 'ASC'],
+        ['createdAt', 'ASC']]
+      });
       const resposta: Retorno = {
         status: 'SUCESS',
         description: topics,
@@ -88,14 +92,14 @@ class TopicService {
   }
 
   async deleteTopic(req: Request) {
-    const TopicId = req.params.topic_id;
+    const TopicId = parseInt(req.params.topic_id);
     try {
       const topic = await Topic.findByPk(TopicId);
       if (topic) {
         await topic.destroy();
         const resposta: Retorno = {
           status: 'SUCESS',
-          description: topic,
+          description: TopicId,
         };
         return resposta;
       } else {
@@ -115,12 +119,12 @@ class TopicService {
   }
 
   async putTopic(req: Request) {
-    const TopicId = req.params.topic_id;
-    const { title, UserId, describe, time, lastDateStudy } = req.body;
+    const { title, userId, time, lastDateStudy, id } = req.body;
     try {
-      const topic = await Topic.findByPk(TopicId);
+      const topic = await Topic.findByPk(id);
+      console.log('TOPIC', topic);
       if (topic) {
-        await topic.update({ title, UserId, describe, time, lastDateStudy });
+        await topic.update({ id, title, UserId: userId, time, lastDateStudy });
 
         const resposta: Retorno = {
           status: 'SUCESS',

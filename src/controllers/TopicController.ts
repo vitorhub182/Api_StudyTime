@@ -48,7 +48,7 @@ class TopicController {
   async deleteTopic(req: Request, res: Response) {
     const resposta = await topicService.deleteTopic(req);
     if (resposta.status == 'SUCESS') {
-      res.status(200).json({ status: 'Deletado' });
+      res.status(200).json({ id: resposta.description });
     } else if (resposta.description == 'NOT FOUND') {
       res.status(404).json({ status: 'Topic não encontrado' });
     } else {
@@ -58,8 +58,9 @@ class TopicController {
   }
 
   async putTopic(req: Request, res: Response) {
-    const { title, UserId } = req.body;
-    if (title != null && UserId != null) {
+    const { title, userId } = req.body;
+    console.log('BODY', req.body);
+    if (title != null && userId != null) {
       const resposta = await topicService.putTopic(req);
       if (resposta.status == 'SUCESS') {
         res.status(200).json({ status: 'Atualizado' });

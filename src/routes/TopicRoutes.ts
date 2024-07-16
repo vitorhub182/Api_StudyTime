@@ -7,6 +7,6 @@ router.get('/:userId', topicController.getTopicList);
 // router.get('/:topic_id', topicController.getTopic);
 router.post('/', topicController.postRegisterTopic);
 router.delete('/:topic_id', topicController.deleteTopic);
-router.put('/:topic_id', topicController.putTopic);
+router.put('/', topicController.putTopic);
 
 module.exports = router;
